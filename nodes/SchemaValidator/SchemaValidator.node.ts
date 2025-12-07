@@ -27,7 +27,8 @@ export class SchemaValidator implements INodeType {
 			name: 'Schema Validator',
 		},
 		inputs: [NodeConnectionTypes.Main],
-		outputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main, NodeConnectionTypes.Main],
+		outputNames: ['Valid', 'Errors'],
 		properties: [
 			{
 				displayName: 'JSON Schema',
@@ -78,7 +79,8 @@ export class SchemaValidator implements INodeType {
 	 */
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
-		const returnData: INodeExecutionData[] = [];
+		const validItems: INodeExecutionData[] = [];
+		const errorItems: INodeExecutionData[] = [];
 
 		const schemaJson = this.getNodeParameter('jsonSchema', 0) as string;
 		const dataSource = this.getNodeParameter('dataSource', 0) as DataSource;
@@ -124,22 +126,24 @@ export class SchemaValidator implements INodeType {
 					);
 				}
 
-				returnData.push(item);
+				validItems.push(item);
 			} catch (error) {
+				const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
 				// Route to error output if "Continue on Fail" enabled, otherwise stop execution
-				if (this.continueOnFail()) {
-					returnData.push({
-						json: {
-							error: error.message,
-						},
-						pairedItem: itemIndex,
-					});
-				} else {
+				if (!this.continueOnFail()) {
 					throw error;
 				}
+
+				errorItems.push({
+					json: {
+						error: errorMessage,
+					},
+					pairedItem: itemIndex,
+				});
 			}
 		}
 
-		return [returnData];
+		return [validItems, errorItems];
 	}
 }

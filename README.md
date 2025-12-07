@@ -1,6 +1,5 @@
-# @iamfj/n8n-nodes-schema-validation
+# winklr/n8n-nodes-schema-validation
 
-[![npm version](https://badge.fury.io/js/@iamfj%2Fn8n-nodes-schema-validation.svg)](https://www.npmjs.com/package/@iamfj/n8n-nodes-schema-validation)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 JSON Schema validation node for [n8n](https://n8n.io/) workflows. Validate your data against JSON Schema standards with error output routing.
@@ -8,7 +7,7 @@ JSON Schema validation node for [n8n](https://n8n.io/) workflows. Validate your 
 [n8n](https://n8n.io/) is a [fair-code licensed](https://docs.n8n.io/sustainable-use-license/) workflow automation platform.
 
 > **✅ n8n Cloud Compatible**
-> 
+>
 > This package has all dependencies bundled and is fully compatible with n8n Cloud.
 
 ## Installation
@@ -19,7 +18,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 1. Go to **Settings** > **Community Nodes** in your n8n instance
 2. Select **Install**
-3. Enter `@iamfj/n8n-nodes-schema-validation` in the search field
+3. Enter `winklr/n8n-nodes-schema-validation` in the search field
 4. Click **Install**
 
 ### Manual Installation
@@ -27,7 +26,7 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 For self-hosted n8n instances, you can install via npm:
 
 ```bash
-npm install @iamfj/n8n-nodes-schema-validation
+npm install winklr/n8n-nodes-schema-validation
 ```
 
 Then restart your n8n instance.
@@ -37,6 +36,7 @@ Then restart your n8n instance.
 Validates JSON data against a JSON Schema using n8n's "Continue on Fail" error handling pattern.
 
 **Features:**
+
 - ✅ Validate incoming data against JSON Schema standards
 - ⚠️ Error output routing with "Continue on Fail" mode
 - 🎯 Support for custom JSON input via expressions
@@ -46,6 +46,7 @@ Validates JSON data against a JSON Schema using n8n's "Continue on Fail" error h
 - 📦 All dependencies bundled for n8n Cloud compatibility
 
 **Use Cases:**
+
 - Data quality checks before processing
 - API response validation
 - Form data validation
@@ -53,11 +54,13 @@ Validates JSON data against a JSON Schema using n8n's "Continue on Fail" error h
 - Contract testing between workflows
 
 **Configuration:**
+
 - **JSON Schema**: Define your validation schema (JSON Schema Draft 7 format)
 - **Data Source**: Choose between "Input Data" or "Custom JSON"
 - **Custom JSON**: Optional field for n8n expressions (e.g., `{{ $json.data }}`)
 
 **Example:**
+
 ```json
 {
   "type": "object",
@@ -71,6 +74,7 @@ Validates JSON data against a JSON Schema using n8n's "Continue on Fail" error h
 ```
 
 **Output:**
+
 - **Default Output**: Items that pass validation
 - **Error Output**: Items that fail validation (when "Continue on Fail" is enabled)
 
@@ -142,6 +146,7 @@ MIT © [Fabian Jocks](https://github.com/iamfj)
 ## Issues & Support
 
 If you encounter any issues or have questions:
+
 - [Report a bug](https://github.com/iamfj/n8n-nodes-schema-validation/issues/new?template=bug-report.md)
 - [Request a feature](https://github.com/iamfj/n8n-nodes-schema-validation/issues/new?template=feature-request.md)
 - [Ask a question](https://github.com/iamfj/n8n-nodes-schema-validation/discussions)
