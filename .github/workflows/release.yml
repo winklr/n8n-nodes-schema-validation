@@ -42,13 +42,30 @@ jobs:
           bun test
           bun run build
 
+      - name: semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: bunx semantic-release
+
+      - name: get release version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Release version: $VERSION"
+
       - name: package artifact
+        if: steps.version.outputs.version != ''
         run: |
           mkdir -p artifacts
-          zip -r artifacts/n8n-schema-validator-${{ github.ref_name }}.zip dist
+          zip -r artifacts/n8n-schema-validator-v${{ steps.version.outputs.version }}.zip dist
 
-      - name: upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: n8n-schema-validator-${{ github.ref_name }}
-          path: artifacts/n8n-schema-validator-${{ github.ref_name }}.zip
+      - name: upload artifact to release
+        if: steps.version.outputs.version != ''
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload v${{ steps.version.outputs.version }} \
+            artifacts/n8n-schema-validator-v${{ steps.version.outputs.version }}.zip \
+            --clobber
