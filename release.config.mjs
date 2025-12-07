@@ -83,14 +83,14 @@ export default {
 				changelogFile: 'CHANGELOG.md',
 			},
 		],
-		// Update package.json version and publish to npm
-		[
-			'@semantic-release/npm',
-			{
-				npmPublish: true,
-				pkgRoot: '.',
-			},
-		],
+	// Update package.json version (without publishing to npm)
+	[
+		'@semantic-release/npm',
+		{
+			npmPublish: false,
+			pkgRoot: '.',
+		},
+	],
 		// Commit updated files back to repository
 		[
 			'@semantic-release/git',
